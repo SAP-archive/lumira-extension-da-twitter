@@ -43,7 +43,8 @@ Live Twitter data will be imported as a dataset, which we can choose to create.<
 Once you have the dataset imported into Lumira, you can now play around with the data and charts as you please!<br>
 ![My image](https://github.com/SAP/lumira-extension-da-twitter/blob/master/readmescreenshots/g.jpg)<br>
 
-You can find details on this SCN blog post : 
 
+You can find details on this SCN blog post : 
 <a>http://scn.sap.com/community/lumira/blog/2014/09/12/a-lumira-extension-to-acquire-twitter-data</a>
 
+Note: Due to Twitter's REST API policy on limited data retrieval, only a small amount of data can be called, with a limited time frame of about a week (for open source, free users) and 30 days for paid users. Data charts generated in Lumira may therefore have limited and/or less data points. 
