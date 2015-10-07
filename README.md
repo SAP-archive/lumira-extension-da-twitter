@@ -1,5 +1,6 @@
-lumira-extension-da-twitter
+SAP Lumira Data Access Extension for Twitter
 ===========================
+By [Alper Derici](http://scn.sap.com/people/alper.derici%40sap)
 
 A Lumira Data Access Extension To Fetch Twitter Data
 
@@ -23,7 +24,7 @@ The reason why we need to create a Twitter app is so that we can access Twitter 
   -Dactivate.externaldatasource.ds=true <br>
 ![My image](https://github.com/SAP/lumira-extension-da-twitter/blob/master/readmescreenshots/b.jpg)<br>
 4. Now save this file and create a folder called daextensions in the C:\Program Files\SAP Lumira\Desktop directory so that we have a directory called C:\Program Files\SAP Lumira\Desktop\daextensions <br>
-5. Move the executable file called TwitterExtractor.exe located in the \bin folder, to the directory we just created.<br>
+5. Download the executable file called TwitterExtractor.exe from [Alper's Repo](https://github.com/aderici/LumiraTwitterExtractor/blob/master/bin/TwitterExtractor.exe), to the directory we just created.<br>
 
 <strong>Step 3:	Import data extension into Lumira</strong> <br>
 1. Now open up Lumira and add a new dataset from an external data source as follows:<br>
