@@ -9,9 +9,9 @@
 
 Here we will demonstrate how to build your own Data Access Extension, by using the [sample extension](https://github.com/denzalereese/lumira-extension-da-sample) as starter code. Follow that link for an overview and walkthroughs on Data Access Extensions in the sample repo, or download the sample extension zip [here](https://github.com/denzalereese/lumira-extension-da-sample/blob/master/install-extension/Lumira-1.x%2B2.x(Discovery)/com.sap.lumira.sampleextension_1.29.2.201706131346.zip). In this example we will also show how to utilize external libraries, store parameters temporarily in the "runtimeInfo" object, and add custom icons to build a lightweight extension for Twitter data. You can download the code from this repo, or directly get the extension zip [here](./install-extension/com.sap.lumira.twitterextension_1.29.2.201705191559.zip). 
 
-*Note: This extension was built for educational purposes, as the open Twitter API has limits on the amount of data you can retrieve. For business-grade data, request access to the Twitter enterprise API at [](https://gnip.com/). 
+*Note: This extension was built for educational purposes, as the open Twitter API has limits on the amount of data you can retrieve. For business-grade data, request access to the Twitter enterprise API at [https://gnip.com/](https://gnip.com/). 
 
-###Tutorial
+### Tutorial
 
 We begin by downloading and unzipping the sample extension folder. Then navigate to the folder, copy-paste it, and rename it to our extension's name.
 
@@ -54,8 +54,6 @@ Next up, we open the file "platform.target" and click the "Set as Target Platfor
 Note: ignore any errors in plugin.xml
 
 Then, we right click the "export.xml" file and "Run As > Ant Build" to export our extension zip file. 
-
-Note: If your build is not successful due to an error with the "zip64mode" attribute, remove the two instances of "zip64mode=never" in the export.xml file and rebuild.
 
 You can navigate to the target folder in your File Explorer to find the extension zip file, that can be installed in Lumira using the Extension Manager. 
 
