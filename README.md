@@ -11,7 +11,7 @@ Here we will demonstrate how to build your own Data Access Extension, by using t
 
 *Note: This extension was built for educational purposes, as the open Twitter API has limits on the amount of data you can retrieve. For business-grade data, request access to the Twitter enterprise API at [](https://gnip.com/). 
 
-###Tutorial
+### Tutorial
 
 We begin by downloading and unzipping the sample extension folder. Then navigate to the folder, copy-paste it, and rename it to our extension's name.
 
