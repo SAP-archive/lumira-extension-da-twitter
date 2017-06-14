@@ -9,7 +9,7 @@
 
 Here we will demonstrate how to build your own Data Access Extension, by using the [sample extension](https://github.com/denzalereese/lumira-extension-da-sample) as starter code. Follow that link for an overview and walkthroughs on Data Access Extensions, or download the sample extension zip here. In this example we will also show how to utilize external libraries, store parameters temporarily in the "runtimeInfo" object, and add custom icons to build a lightweight extension for Twitter data. You can download the code from this repo, or get the extension zip here. 
 
-*Note: This extension was built for educational purposes, as the open Twitter API has limits on the amount of data you can retrieve. For business-grade data, request access to the Twitter enterprise API at [](https://gnip.com/). 
+*Note: This extension was built for educational purposes, as the open Twitter API has limits on the amount of data you can retrieve. For business-grade data, request access to the Twitter enterprise API at [https://gnip.com/](https://gnip.com/). 
 
 ### Tutorial
 
