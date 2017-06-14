@@ -55,8 +55,6 @@ Note: ignore any errors in plugin.xml
 
 Then, we right click the "export.xml" file and "Run As > Ant Build" to export our extension zip file. 
 
-Note: If your build is not successful due to an error with the "zip64mode" attribute, remove the two instances of "zip64mode=never" in the export.xml file and rebuild.
-
 You can navigate to the target folder in your File Explorer to find the extension zip file, that can be installed in Lumira using the Extension Manager. 
 
 Note: if you selected the "Copy Projects into workspace" checkbox when importing the project into Eclipse, the target folder will be located in the copy located inside your workspace directory (e.g. "C:\Users\YOUR_USERNAME\workspace")
