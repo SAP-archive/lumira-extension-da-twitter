@@ -7,9 +7,22 @@
 	<li>Eclipse IDE for Java EE Developers</li>
 </ul>
 
-Here we will demonstrate how to build your own Data Access Extension, by using the [sample extension](https://github.com/denzalereese/lumira-extension-da-sample) as starter code. Follow that link for an overview and walkthroughs on Data Access Extensions in the sample repo, or download the sample extension zip [here](https://github.com/denzalereese/lumira-extension-da-sample/blob/master/install-extension/Lumira-1.x%2B2.x(Discovery)/com.sap.lumira.sampleextension_1.29.2.201706131346.zip). In this example we will also show how to utilize external libraries, store parameters temporarily in the "runtimeInfo" object, and add custom icons to build a lightweight extension for Twitter data. You can download the code from this repo, or directly get the extension zip [here](./install-extension/com.sap.lumira.twitterextension_1.29.2.201705191559.zip). 
+Here we will demonstrate how to build your own Data Access Extension, by using the [sample extension](https://github.com/denzalereese/lumira-extension-da-sample) as starter code. Follow that link for an overview and walkthroughs on Data Access Extensions in the sample repo, or download the sample extension zip [here](https://github.com/denzalereese/lumira-extension-da-sample/blob/master/install-extension/Lumira-1.x%2B2.x(Discovery)/com.sap.lumira.sampleextension_1.29.2.201706131346.zip). In this example we will also show how to utilize external libraries, store parameters temporarily in the "runtimeInfo" object, and add custom icons to build a lightweight extension for Twitter data. You can download the code from this repo, or directly get the extension zip at the download link below. 
 
-*Note: This extension was built for educational purposes, as the open Twitter API has limits on the amount of data you can retrieve. For business-grade data, request access to the Twitter enterprise API at [https://gnip.com/](https://gnip.com/). 
+*Note: This extension was built for educational purposes, as the open Twitter API has limits on the amount of data you can retrieve. For business-grade data  you can request access to the Twitter enterprise platform at [https://gnip.com/](https://gnip.com/) and build a new extension for that API, since this extension does not support gnip. 
+
+### Using the extension
+
+###### [Download](./install-extension/com.sap.lumira.twitterextension_1.29.2.201705191559.zip)
+
+###### Install
+- Open SAP Lumira (1.29+ or 2.x Discovery)
+- Select File > Extensions to open the Extension Manager (or Ctrl + J)
+- Click “Manual Installation” in the bottom-right corner & navigate to the extension zip file
+- Restart Lumira, and the extension will appear in the list of possible data sources when creating a new document 
+
+###### [Retrieve Twitter API keys/tokens](#Twitter-Platform)
+
 
 ### Tutorial
 
