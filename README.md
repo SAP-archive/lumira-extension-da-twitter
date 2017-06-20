@@ -21,7 +21,7 @@ Here we will demonstrate how to build your own Data Access Extension, by using t
 - Click “Manual Installation” in the bottom-right corner & navigate to the extension zip file
 - Restart Lumira, and the extension will appear in the list of possible data sources when creating a new document 
 
-###### [Retrieve Twitter API keys/tokens](#Twitter-Platform)
+###### [Retrieve Twitter API keys/tokens](#twitter-platform)
 
 
 ### Tutorial
