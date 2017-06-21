@@ -1,52 +1,403 @@
-SAP Lumira Data Access Extension for Twitter
-===========================
-By [Alper Derici](http://scn.sap.com/people/alper.derici%40sap)
+## Twitter Data Access Extension (Tutorial)
 
-A Lumira Data Access Extension To Fetch Twitter Data
+### Requirements
+<ul>
+	<li>SAP Lumira Discovery or SAP Lumira 1.29+</li>
+	<li>Java Development Kit 7, Update 75+</li>
+	<li>Eclipse IDE for Java EE Developers</li>
+</ul>
 
-A Step-by-Step Guide to Installation & Execution of Twitter Data Access Extension is shown as follows:
+Here we will demonstrate how to build your own Data Access Extension, by using the [sample extension](https://github.com/denzalereese/lumira-extension-da-sample) as starter code. Follow that link for an overview and walkthroughs on Data Access Extensions in the sample repo, or download the sample extension zip [here](https://github.com/denzalereese/lumira-extension-da-sample/blob/master/install-extension/Lumira-1.x%2B2.x(Discovery)/com.sap.lumira.sampleextension_1.29.2.201706131346.zip). In this example we will also show how to utilize external libraries, store parameters temporarily in the "runtimeInfo" object, and add custom icons to build a lightweight extension for Twitter data. It allows the authenticated user to import their recent timeline, and number of likes/retweets per tweet. You can download the code from this repo, or directly get the extension zip at the download link below. 
 
-<strong>Step 1:	Creation of a Twitter app</strong> <br>
-The reason why we need to create a Twitter app is so that we can access Twitter API keys, which will be our main source of      extracting Twitter data and importing it into SAP Lumira for visualization. <br>
-1. Simply log in to your Twitter account (or sign up if you don’t already have one), and then go to   https://apps.twitter.com/ and create a new app.
-![My image](https://github.com/SAP/lumira-extension-da-twitter/blob/master/readmescreenshots/1.jpg)<br>
-![My image](https://github.com/SAP/lumira-extension-da-twitter/blob/master/readmescreenshots/2.jpg) <br>
-2. You now have your Twitter app from which you can grab your API keys which we will use later. 
-![My image](https://github.com/SAP/lumira-extension-da-twitter/blob/master/readmescreenshots/3.jpg) 
-<br>
+*Note: This extension was built for educational purposes, as the open Twitter API has limits on the amount of data you can retrieve. For business-grade data  you can request access to the Twitter enterprise platform at [https://gnip.com/](https://gnip.com/) and build a new extension for that API, since this extension does not support gnip. 
 
-<strong>Step 2:	Activate Data Source Extensions in Lumira</strong> <br>
-1. Go to the directory where SAP Lumira is installed: C:\Program Files\SAP Lumira\Desktop <br>
-2. Find the file SAPLumira.ini and open it with a text editor. <br>
-![My image](https://github.com/SAP/lumira-extension-da-twitter/blob/master/readmescreenshots/a.jpg) <br>
-3. Add the following lines of code to the SAPLumira.ini file: <br>
-  -Dhilo.externalds.folder=C:\Program Files\SAP Lumira\Desktop\daextensions <br>
-  -Dactivate.externaldatasource.ds=true <br>
-![My image](https://github.com/SAP/lumira-extension-da-twitter/blob/master/readmescreenshots/b.jpg)<br>
-4. Now save this file and create a folder called daextensions in the C:\Program Files\SAP Lumira\Desktop directory so that we have a directory called C:\Program Files\SAP Lumira\Desktop\daextensions <br>
-5. Download the executable file called TwitterExtractor.exe from [Alper's Repo](https://github.com/aderici/LumiraTwitterExtractor/blob/master/bin/TwitterExtractor.exe), to the directory we just created.<br>
+### Using the extension
 
-<strong>Step 3:	Import data extension into Lumira</strong> <br>
-1. Now open up Lumira and add a new dataset from an external data source as follows:<br>
-![My image](https://github.com/SAP/lumira-extension-da-twitter/blob/master/readmescreenshots/d.jpg)<br>
-2. We can see the twitterextractor as an uncategorized extension:<br>
-![My image](https://github.com/SAP/lumira-extension-da-twitter/blob/master/readmescreenshots/e.jpg)<br>
+###### [Download](./install-extension/com.sap.lumira.twitterextension_1.29.2.201705191559.zip)
 
-<strong>Step 4:	Provide extraction parameters</strong> <br>
-The TwitterExtractor.exe will automatically open up when we click on Next above. Enter the parameters like the API Key and API Secret, the string we want to search for, and the number of tweets we want to display in the data chart. <br>
-![My image](https://github.com/SAP/lumira-extension-da-twitter/blob/master/readmescreenshots/c.jpg)<br>
+###### Install
+- Open SAP Lumira (1.29+ or 2.x Discovery)
+- Select File > Extensions to open the Extension Manager (or Ctrl + J)
+- Click “Manual Installation” in the bottom-right corner & navigate to the extension zip file
+- Restart Lumira, and the extension will appear in the list of possible data sources when creating a new document 
 
-<strong>Step 5:	Create dataset</strong> <br>
-Live Twitter data will be imported as a dataset, which we can choose to create.<br>
-![My image](https://github.com/SAP/lumira-extension-da-twitter/blob/master/readmescreenshots/f.jpg)<br>
-
-<strong>Step 6:	Get live insights</strong> <br>
-Once you have the dataset imported into Lumira, you can now play around with the data and charts as you please!<br>
-![My image](https://github.com/SAP/lumira-extension-da-twitter/blob/master/readmescreenshots/g.jpg)<br>
+###### [Retrieve Twitter API keys/tokens](#twitter-platform)
 
 
-You can find details on this SCN blog post : <br>
-<a>http://scn.sap.com/community/lumira/blog/2014/09/12/a-lumira-extension-to-acquire-twitter-data</a>
+### Tutorial
 
-<strong>NOTE: </strong><br>
-Due to Twitter's REST API policy on limited data retrieval, only a small amount of data can be called, with a limited time frame of about a week (for open source, free users) and 30 days for paid users. Data charts generated in Lumira may therefore have limited and/or less data points. 
+We begin by downloading and unzipping the sample extension folder. Then navigate to the folder, copy-paste it, and rename it to our extension's name.
+
+![](/photos/21-renamed-folder.PNG)
+
+Next, we also have to rename various files to match our new extension's name. Luckily, the sample extension comes equipped with a tool that does this for you easily. 
+
+Open the folder, navigate into the "Docs" sub-folder and run rename-dae.exe. The rename tool will open a prompt:
+
+![](/photos/22-prompt.PNG)
+
+Enter a name for your extension with no spaces (e.g. "Twitter"), and the package path "com.sap.bi.da.extension". 
+
+![](/photos/23-prompt-filled.PNG)
+
+Press enter, and the tool will handle the renaming task for you. Now, we're ready to open our extension project in Eclipse.
+
+###### Import Project
+
+In the menu bar of our Eclipse workspace, we navigate to File > Import. Then, click "Existing Projects into Workspace".
+
+![](/photos/24-import.PNG)
+
+Browse to the new extension folder, and select the "Copy projects into workspace" checkbox (optional, but recommended). 
+
+![](/photos/25-import-finish.PNG)
+
+Lastly, click finish to import our extension project into Eclipse
+
+###### Environment Setup
+
+Right-click the Docs > eclipse.bat file, and select "Open With > Text Editor". Set the "ECLIPSE HOME" environment variable to your Eclipse installation folder path, and "JAVA HOME" to your JDK folder path.
+
+![](/photos/26-eclipse-bat.PNG)
+
+Next up, we open the file "platform.target" and click the "Set as Target Platform" button in the top-right corner.
+
+![](/photos/27-target-platform.PNG)
+
+Note: ignore any errors in plugin.xml
+
+Then, we right click the "export.xml" file and "Run As > Ant Build" to export our extension zip file. 
+
+You can navigate to the target folder in your File Explorer to find the extension zip file, that can be installed in Lumira using the Extension Manager. 
+
+Note: if you selected the "Copy Projects into workspace" checkbox when importing the project into Eclipse, the target folder will be located in the copy located inside your workspace directory (e.g. "C:\Users\YOUR_USERNAME\workspace")
+
+Right now the extension may have a different name, but it still has the same functionality as the sample. Let's start modifying it for our use case. 
+
+###### Twitter Platform
+
+First, we register an application on the Twitter Platform. Sign up for a developer account at [http://dev.twitter.com](http://dev.twitter.com).
+
+After logging in, click "My Apps" in the navigation menu at the top of the platform site. 
+
+![](/photos/28-twitter-platform.PNG)
+
+Next, click the "Create New App" button
+
+![](/photos/29-create-app.PNG)
+
+We fill out the form with our app's name, description, and URL (can just be a placeholder), check the Developer Agreement, and click "Create Your Twitter Application".
+
+![](/photos/30-app-details-form.PNG)
+
+In the application page, navigate to "Keys and Access Tokens". Take note of your Consumer Key and Consumer Secret. Then, scroll down to the bottom of the page to generate your Access Token and Access Secret. These keys and tokens will be needed for authentication when we use our extension. 
+
+###### TwitterExtensionDialogController.js
+
+On the frontend, we need to change our dialog controls to match the parameters we will need from the user. So, we replace the sample UI with text inputs for the user's Consumer Key, Consumer Secret, Access Token, and Access Secret. 
+
+```javascript
+var datasetNameLabel = new sap.m.Label({
+        	text: "Dataset Name:",
+        	labelFor: datasetNameText
+        });
+        
+        dialog.addContent(datasetNameLabel);
+        
+        var datasetNameText = new sap.m.Input({
+        	width: "100%"
+        });
+        
+        dialog.addContent(datasetNameText);
+        
+        var consumerKeyLabel = new sap.m.Label({
+            text : "Consumer Key:",
+            labelFor : consumerKeyText
+        });
+        
+        dialog.addContent(consumerKeyLabel);
+
+        var consumerKeyText = new sap.m.Input({
+            width : '100%'
+        });
+        
+        dialog.addContent(consumerKeyText);
+        
+        var consumerSecretLabel = new sap.m.Label({
+            text : "Consumer Secret:",
+            labelFor : consumerSecretText
+        });
+        
+        dialog.addContent(consumerSecretLabel);
+
+        var consumerSecretText = new sap.m.Input({
+            width : '100%'
+        });
+        
+        dialog.addContent(consumerSecretText);
+        
+        var accessTokenLabel = new sap.m.Label({
+            text : "Access Token:",
+            labelFor : accessTokenText
+        });
+        
+        dialog.addContent(accessTokenLabel);
+        
+        var accessTokenText = new sap.m.Input({
+            width : '100%'
+        });
+        
+        dialog.addContent(accessTokenText);
+        
+        var accessSecretLabel = new sap.m.Label({
+            text : "Access Secret:",
+            labelFor : accessSecretText
+        });
+        
+        dialog.addContent(accessSecretLabel);
+        
+        var accessSecretText = new sap.m.Input({
+            width : '100%'
+        });
+              
+        dialog.addContent(accessSecretText);
+```
+
+Next, we use the "runtimeInfo" object to store those objects rather than just the "info" object in acquisitionState. This way, our user's sensitive keys and tokens will not persist with the Lumira document. 
+
+```javascript
+var okButtonPressed = function() {
+            var info = {};
+            var runtimeInfo = {};
+            info.datasetName = datasetNameText.getValue();
+            runtimeInfo.consumerKey = consumerKeyText.getValue();
+            runtimeInfo.consumerSecret = consumerSecretText.getValue();
+            runtimeInfo.accessToken =  accessTokenText.getValue();
+            runtimeInfo.accessSecret = accessSecretText.getValue();
+            acquisitionState.info = JSON.stringify(info);
+            acquisitionState.runtimeInfo = JSON.stringify(runtimeInfo);
+            oDeferred.resolve(acquisitionState, info.datasetName);
+            dialog.close();
+        };
+```
+
+###### Adding External Libraries
+
+In our backend, we'll be using an external java library "twitter4j" to interact with the Twitter API. 
+
+To add external libraries to our extension library, we first paste the .jar file inside of our "/lib" folder. 
+
+![](/photos/31-lib-jar.PNG)
+
+Next, right-click the .jar file in Eclipse and select "Build Path > Add to Build Path".
+
+Lastly navigate to the "META-INF" folder in Eclipse, right-click the "MANIFEST.MF" file and select "Open With > Text Editor" to edit. Here, we add the path of our external library (e.g. "lib/twitter4j-core-4.0.4.jar") to the "Bundle-Classpath" in our manifest. 
+
+![](/photos/32-manifest.PNG)
+
+###### TwitterExtension.java
+
+Now we are ready to use the library in our Java code. 
+
+We start with the execute() method in our TwitterExtensionDataRequestJob class. Here, we retrieve the parameters the user entered in the UI from the acquisitionState runtime info. 
+
+```java
+//Get runtime info object from acquisitionState
+            	JSONObject runtimeInfoJSON = new JSONObject(acquisitionState.getRuntimeInfo());
+```
+
+
+Next, we use the twitter4j library to authenticate the user based on those parameters and fetch their tweets
+
+```java
+//Get OAuth keys and tokens from the info object to authenticate the user
+            	//(using twitter4j library)
+                ConfigurationBuilder cb = new ConfigurationBuilder(); 
+                cb.setDebugEnabled(true)
+	            	.setOAuthConsumerKey(runtimeInfoJSON.getString("consumerKey"))
+	            	.setOAuthConsumerSecret(runtimeInfoJSON.getString("consumerSecret"))
+	            	.setOAuthAccessToken(runtimeInfoJSON.getString("accessToken"))
+	            	.setOAuthAccessTokenSecret(runtimeInfoJSON.getString("accessSecret"));
+	             
+                //Use the twitter4j library to fetch the authenticated user's timeline
+                TwitterFactory tf = new TwitterFactory(cb.build());
+                Twitter twitter = tf.getInstance();
+                Paging page = new Paging (1, 100);
+                List<Status> status = twitter.getUserTimeline(page);
+```
+
+Then we loop through the user's timeline and write each tweet, creation date, number of likes, and number of retweets to a CSV file using the FileWriter class. 
+
+```java
+//Prepare to create a CSV file: store the comma delimeter, new line character, and column header
+                String delimeter = ",";
+                String newLine = "\n";
+                String header = "Tweet,Created_At,Favorites,Retweets";
+                
+                FileWriter fileWriter = null;
+                
+                try {
+                	//Provide a location for the FileWriter to create the CSV file
+                	fileWriter = new FileWriter("YOUR_FILE_PATH");
+                	fileWriter.append(header);
+                	
+                	String tweet;
+                	Date createdAt; 
+                	int numFavorites;
+                	int numRetweets;
+                	
+                	//Loop through the tweets in the user's timeline
+                	//and append the tweet, time it was created, favorites, and retweets to the CSV
+                	for (Status st: status) {
+                		if (!st.isRetweet()) {
+	                		fileWriter.append(newLine);
+	                    	tweet = st.getText();
+	                    	createdAt = st.getCreatedAt();
+	                    	numFavorites = st.getFavoriteCount();
+	                    	numRetweets = st.getRetweetCount();
+	                    	fileWriter.append(tweet);
+	                    	fileWriter.append(delimeter);
+	                    	fileWriter.append(String.valueOf(numFavorites));
+	                    	fileWriter.append(delimeter);
+	                    	fileWriter.append(String.valueOf(numRetweets));
+                		}
+                    }
+                	
+                } catch (Exception e) {
+                	throw new DAException("Filewriter failed", e);
+                } finally {
+                	try {
+                		fileWriter.flush();
+                		fileWriter.close();
+                	} catch (Exception e) {
+                		throw new DAException("Error flushing/closing filewriter", e);
+                	}
+                }
+                
+                //Return the newly created CSV as a File object
+                File csv = new File(""YOUR_FILE_PATH"");
+                return csv;
+            } catch (Exception e) {
+                throw new DAException("Twitter Extension acquisition failed", e);
+            }
+```
+
+Lastly, we return the CSV we wrote as a File object.
+
+We move to the execute() method in the TwitterExtensionMetadataRequestJob class.
+
+Before we modify the code here, we'll need to create a metadata file for our data and paste it in our project. 
+
+![](/photos/34-metadata-tweet.PNG)
+
+![](/photos/35-metadata-file-structure.PNG)
+
+Now, we can instantiate our metadata as a File object and read it as a String that we return.
+
+```java
+ @Override
+        public String execute(IDAEProgress callback) throws DAException {
+            try {
+            	//Retrieve your metadata file from it's location, and read it to a String
+                File metadataFile = new File("YOUR_FILE_PATH");
+                String metadata = new String(Files.readAllBytes(metadataFile.toPath()));
+                return metadata;
+            } catch (Exception e) {
+                throw new DAException("Twitter Extension acquisition failed", e);
+            }
+        }
+```
+
+###### TwitterExtension.js & Custom icons
+
+In the TwitterExtension.js file, we can first change the title and subtitle of our dataset here.
+
+```javascript
+// This function must return an Object with properties Title and SubTitle, determined by the provided acquisitionState
+    // This will be displayed as an entry in the Most Recently Used pane
+    TwitterExtension.prototype.getConnectionDescription = function(acquisitionState) {
+        var info = JSON.parse(acquisitionState.info);
+        return {
+            Title: info.datasetName,
+            SubTitle: "Twitter Dataset"
+        };
+    };
+```
+
+A more exciting change here is the ability to add custom icons. 
+You can use this website to easily generate different sizes for your icon. 
+
+Navigate to the "img" folder within the "WebContent" folder. Here you can paste your icon image files. You can either use the same file names as the sample and replace, or alternatively you will have to change the file names in the TwitterExtension.js file
+
+![](/photos/36-img-folder.PNG)
+
+```javascript
+// getIcon## must return a path to an image with size ##px* ##px
+    TwitterExtension.prototype.getIcon48 = function() {
+        return "/img/48.png";
+    };
+    TwitterExtension.prototype.getIcon32 = function() {
+        return "/img/32.png";
+    };
+    // The white version of the icon will be displayed when the extension is highlighted in the New Dataset dialog
+    TwitterExtension.prototype.getIcon32_white = function() {
+        return "/img/32_w.png";
+    };
+    TwitterExtension.prototype.getIcon24 = function() {
+        return "/img/24.png";
+    };
+    TwitterExtension.prototype.getIcon16 = function() {
+        return "/img/16.png";
+    };
+```
+
+Our extension is now complete and ready to use!
+
+![](/photos/37-extension-dialog.PNG)
+
+![](/photos/38-tweet-data.PNG)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
